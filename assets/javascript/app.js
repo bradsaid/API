@@ -1,4 +1,6 @@
 $( document ).ready(function(){
+    let topics = [];
+
 
     $("#find-movie").on("click", function(event) {
         event.preventDefault();
