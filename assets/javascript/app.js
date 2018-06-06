@@ -1,10 +1,22 @@
 $( document ).ready(function(){
     let topics = [];
 
+    function gifButtons() {
+        $("#gif-button-view").empty();
+        for (let i = 0; i < topics.length; i++) {
+          let newGif = $("<button>");
+          newGif.addClass("gif");
+          newGif.attr("data-name", topics[i]);
+          newGif.text(topics[i]);
+          $("#gif-button-view").append(newGif);
+        }
+      }
 
     $("#find-gif").on("click", function(event) {
         event.preventDefault();
-        var gif = $("#gif-input").val();
+        var gif = $("#gif-input").val().trim();
+        topics.push(gif);
+        gifButtons();
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=Z4vKSU5AoUMXiTjlS9jE7xDrLISmaqO3";
          $.ajax({
          url: queryURL,
