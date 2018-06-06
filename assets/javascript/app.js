@@ -2,19 +2,20 @@ $( document ).ready(function(){
     let topics = [];
 
 
-    $("#find-movie").on("click", function(event) {
+    $("#find-gif").on("click", function(event) {
         event.preventDefault();
-        var movie = $("#movie-input").val();
-        var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
-        $.ajax({
-        url: queryURL,
-        method: "GET"
-        }).then(function(response) {
-        console.log(response);
-        $("#movie-view").append(response.Title);
-      });
+        var gif = $("#gif-input").val();
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=Z4vKSU5AoUMXiTjlS9jE7xDrLISmaqO3";
+         $.ajax({
+         url: queryURL,
+         method: "GET"
+         }).then(function(response) {
+      console.log(response);
+      console.log(response.data[0]);
+      url = response.data[0].images.fixed_width.url
+      $("#gif-view").append("<img src=" + url + ">");
+    });
 
-   
-  });
+    });
 
 });
