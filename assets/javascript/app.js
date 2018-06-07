@@ -23,12 +23,16 @@ $( document ).ready(function(){
         }).then(function(response) {
             $("#gif-view").empty();  
             for (var i = 0; i < response.data.length; i++) {
-                let stillVal = response.data[i].images.fixed_height_still.url;   // respone is not yet defined 
-                console.log(stillVal)      
-                let url = response.data[i].images.fixed_height.url;
-                $("#gif-view").append("<img src=" + url + ">");
-                //console.log(response.data[i]);
+                let stillUrl = response.data[i].images.fixed_height_still.url;      // working on pausing gifs
+                console.log(stillUrl);                                               // working on pausing gifs
+                let url = response.data[i].images.fixed_height.url;                 // working on pausing gifs
+                $("#gif-view").append("<img src=" + url + ">");  // appends each gif
             }
+            $("#gif-view").on("click", function() {   // working on pausing gifs
+                let stillUrl = $(this).src;
+                //$(this).append("<img src=" + stillUrl + ">");
+                console.log(stillUrl);
+              });
         topics.push(gif);
         gifButtons();    
     });
@@ -49,35 +53,6 @@ $( document ).ready(function(){
         });
 
       }
-
-      $("#gif-view").on("click", function() {
-        let stillUrl = $(this).src;
-        $(this).append("<img src=" + stillUrl + ">");
-
-        // STEP TWO: make a variable named state and then store the image's data-state into it.
-        // Use the .attr() method for this.
-  
-        // ============== FILL IN CODE HERE FOR STEP TWO =========================
-  
-        // CODE GOES HERE
-  
-        // =============================================
-  
-        // STEP THREE: Check if the variable state is equal to 'still',
-        // then update the src attribute of this image to it's data-animate value,
-        // and update the data-state attribute to 'animate'.
-  
-        // If state is equal to 'animate', then update the src attribute of this
-        // image to it's data-still value and update the data-state attribute to 'still'
-        // ============== FILL IN CODE HERE FOR STEP THREE =========================
-  
-        // CODE GOES HERE
-  
-        // ==============================================
-  
-        // STEP FOUR: open the file in the browser and click on the images.
-        // Then click again to pause.
-      });  
 
     $(document).on("click", ".gif", displayGif);
     gifButtons();
