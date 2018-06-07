@@ -8,7 +8,6 @@ $( document ).ready(function(){
           let newGif = $("<button>");
           newGif.addClass("gif");
           newGif.attr("data-name", topics[i]);
-          //newGif.attr("data-still", response.data[i].images.fixed_height_still);   // respone is not yet defined
           newGif.text(topics[i]);
           $("#gif-button-view").append(newGif);
         }
@@ -17,21 +16,21 @@ $( document ).ready(function(){
     $("#find-gif").on("click", function(event) {
         event.preventDefault();
         let gif = $("#gif-input").val().trim();
-        
         let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=Z4vKSU5AoUMXiTjlS9jE7xDrLISmaqO3&limit=10";
          $.ajax({
          url: queryURL,
          method: "GET"
         }).then(function(response) {
-            $("#gif-view").empty();
-            //gif.attr("data-still", response.data.images.fixed_height_still.url);   // respone is not yet defined
-            topics.push(gif);
-            gifButtons();
+            $("#gif-view").empty();  
             for (var i = 0; i < response.data.length; i++) {
+                let stillVal = response.data[i].images.fixed_height_still.url;   // respone is not yet defined 
+                console.log(stillVal)      
                 let url = response.data[i].images.fixed_height.url;
                 $("#gif-view").append("<img src=" + url + ">");
-                console.log(response.data[i]);
+                //console.log(response.data[i]);
             }
+        topics.push(gif);
+        gifButtons();    
     });
 
     function displayGif() {
@@ -51,15 +50,9 @@ $( document ).ready(function(){
 
       }
 
-      $(".gif").on("click", function() {
-        
-
-        // <img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" 
-        // data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" 
-        // data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" 
-        // data-state="still" class="gif">
-
-        let state = $(this).attr("data-state");
+      $("#gif-view").on("click", function() {
+        let stillUrl = $(this).src;
+        $(this).append("<img src=" + stillUrl + ">");
 
         // STEP TWO: make a variable named state and then store the image's data-state into it.
         // Use the .attr() method for this.
