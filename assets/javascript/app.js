@@ -1,6 +1,7 @@
 $( document ).ready(function(){
     let topics = [];
     let gifResponse = "";
+    let state = "";
 
     function gifButtons() {
         $("#gif-button-view").empty();
@@ -24,13 +25,10 @@ $( document ).ready(function(){
             $("#gif-view").empty();  
             for (var i = 0; i < response.data.length; i++) {
                 let url = response.data[i].images.fixed_height.url;  
-                let stillUrl = response.data[i].images.fixed_height_still.url;     // add still url to  
-
-                $("#gif-view").append("<img src=" + url + " " + "data-state=" + stillUrl + ">");  // appends each gif
+                let stillUrl = response.data[i].images.fixed_height_still.url;     
+                $("#gif-view").append("<img src=" + url + " " + "data-still=" + stillUrl + " " + "data-animate=" + url + " " + "class=gif" + ">");  // appends each gif
             }
-            $("#gif-view").on("click", function() {   // working on pausing 
-                                          
-                })
+            
               });
         topics.push(gif);
         gifButtons();    
@@ -52,6 +50,11 @@ $( document ).ready(function(){
         });
 
       }
+
+      $("#gif-view").on("click", function() {   // working on pausing 
+        let state = $(this).attr("data-state");
+        console.log(state);
+        })
 
     $(document).on("click", ".gif", displayGif);
     gifButtons();
