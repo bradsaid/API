@@ -23,15 +23,14 @@ $( document ).ready(function(){
         }).then(function(response) {
             $("#gif-view").empty();  
             for (var i = 0; i < response.data.length; i++) {
-                let stillUrl = response.data[i].images.fixed_height_still.url;      // working on pausing gifs
-                console.log(stillUrl);                                               // working on pausing gifs
-                let url = response.data[i].images.fixed_height.url;                 // working on pausing gifs
-                $("#gif-view").append("<img src=" + url + ">");  // appends each gif
+                let url = response.data[i].images.fixed_height.url;  
+                let stillUrl = response.data[i].images.fixed_height_still.url;     // add still url to  
+
+                $("#gif-view").append("<img src=" + url + " " + "data-state=" + stillUrl + ">");  // appends each gif
             }
-            $("#gif-view").on("click", function() {   // working on pausing gifs
-                let stillUrl = $(this).src;
-                //$(this).append("<img src=" + stillUrl + ">");
-                console.log(stillUrl);
+            $("#gif-view").on("click", function() {   // working on pausing 
+                                          
+                })
               });
         topics.push(gif);
         gifButtons();    
@@ -58,6 +57,6 @@ $( document ).ready(function(){
     gifButtons();
     });
 
-});
+
 
 
