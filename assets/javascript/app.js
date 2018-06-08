@@ -7,7 +7,7 @@ $( document ).ready(function(){
         $("#gif-button-view").empty();
         for (let i = 0; i < topics.length; i++) {
           let newGif = $("<button>");
-          newGif.addClass("gif");
+          newGif.addClass("gifbutton");
           newGif.attr("data-name", topics[i]);
           newGif.text(topics[i]);
           $("#gif-button-view").append(newGif);
@@ -25,8 +25,11 @@ $( document ).ready(function(){
             $("#gif-view").empty();  
             for (var i = 0; i < response.data.length; i++) {
                 let url = response.data[i].images.fixed_height.url;  
-                let stillUrl = response.data[i].images.fixed_height_still.url;     
-                $("#gif-view").append("<img src=" + url + " " + "data-still=" + stillUrl + " " + "data-animate=" + url + " " + "class=gif" + ">");  // appends each gif
+                let stillUrl = response.data[i].images.fixed_height_still.url;   
+                let rating = response.data[i].rating;
+                $("#gif-view").append("<img src=" + url + " " + "data-still=" 
+                + stillUrl + " " + "data-animate=" + url + " " + "data-state=" + "still" + " " 
+                + "class=" + "gif" + " " + "rating=" + rating  + "><p>Rating: " + rating + "</p>");  // appends each gif
             }
             
               });
@@ -41,22 +44,31 @@ $( document ).ready(function(){
           url: queryURL,
           method: "GET"
         }).then(function(response) {
+            console.log(response)
             $("#gif-view").empty();
             for (var i = 0; i < response.data.length; i++) {
                 let url = response.data[i].images.fixed_height.url;
-                $("#gif-view").append("<img src=" + url + ">");
+                let rating = response.data[i].rating;
+                $("#gif-view").append("<img src=" + url + ">", "<p>" + rating + "</p>");
                 
             }
         });
 
       }
 
-      $("#gif-view").on("click", function() {   // working on pausing 
+      function animateGif() {
         let state = $(this).attr("data-state");
-        console.log(state);
-        })
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+        } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+        }
+      }
 
-    $(document).on("click", ".gif", displayGif);
+    $(document).on("click", ".gifbutton", displayGif);
+    $(document).on("click", ".gif", animateGif);
     gifButtons();
     });
 
