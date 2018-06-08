@@ -28,7 +28,7 @@ $( document ).ready(function(){
                 let stillUrl = response.data[i].images.fixed_height_still.url;   
                 let rating = response.data[i].rating;
                 $("#gif-view").append("<img src=" + url + " " + "data-still=" 
-                + stillUrl + " " + "data-animate=" + url + " " + "data-state=" + "still" + " " 
+                + stillUrl + " " + "data-animate=" + url + " " + "data-state=" + "animate" + " " 
                 + "class=" + "gif" + " " + "rating=" + rating  + "><p>Rating: " + rating + "</p>");  // appends each gif
             }
             
@@ -49,7 +49,10 @@ $( document ).ready(function(){
             for (var i = 0; i < response.data.length; i++) {
                 let url = response.data[i].images.fixed_height.url;
                 let rating = response.data[i].rating;
-                $("#gif-view").append("<img src=" + url + ">", "<p>" + rating + "</p>");
+                let stillUrl = response.data[i].images.fixed_height_still.url;
+                $("#gif-view").append("<img src=" + url + " " + "data-still=" 
+                + stillUrl + " " + "data-animate=" + url + " " + "data-state=" + "animate" + " " 
+                + "class=" + "gif" + " " + "rating=" + rating  + "><p>Rating: " + rating + "</p>");  // appends each gif
                 
             }
         });
